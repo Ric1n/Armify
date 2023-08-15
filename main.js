@@ -7,17 +7,11 @@ const globalShortcut = electron.globalShortcut;
 const ipcMain = electron.ipcMain;
 const shell = electron.shell
 const Menu = electron.Menu;
-const updateUtil = require('./utils');
 let options = {
   repo: 'tomasmcm/SpotiWeb',
   name: 'SpotiWeb',
   currentVersion: app.getVersion()
 }
-const updater = new updateUtil(options);
-updater.check();
-let checkForImageDownload = false;
-let notificationTimeout = 2000;
-if(process.platform === 'linux') notificationTimeout = 1000;
 
 let flashPath = path.join(path.resolve(__dirname, '../'), '/app.asar.unpacked/plugins/');
 
