@@ -87,6 +87,7 @@ app.on('ready', function() {
     fullscreenable: true,
     icon: __dirname + '/assets/icon.png',
     backgroundColor: '#121314',
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       plugins: true,
@@ -101,7 +102,7 @@ app.on('ready', function() {
 
   setTimeout(function(){
     // and load the SpotifyWebDesktop website.
-    mainWindow.loadURL("https://play.spotify.com");
+    mainWindow.loadURL("https://open.spotify.com");
   },200);
 
   // Open the DevTools.
@@ -266,27 +267,9 @@ app.on('ready', function() {
     callback({cancel: true});
   });
 
-  var imageFilter = {
-    urls: ["http://o.scdn.co/300/*", "*/loading_throbber.gif"]
-  };
-
-  ses.webRequest.onCompleted(imageFilter, function(details) {
-    //console.log(details.url);
-    if((details.url).indexOf("loading_throbber.gif") != -1){
-      global.loadingGif = details.url;
-
-      mainWindow.webContents.executeJavaScript("appendLyricsButton();");
-    } else {
-      if (checkForImageDownload) {
-        mainWindow.webContents.executeJavaScript("setCurrentImage('" + details.url + "')");
-        checkForImageDownload = false;
-      }
-    }
-  });
-
   // Set the default user agent to Internet Explorer 10 to avoid being redirected to open.spotify.com (for now)
   ses.webRequest.onBeforeSendHeaders((details, callback) => {
-    details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (MSIE 10.0; Windows NT 6.1; Trident/5.0)';
+    details.requestHeaders['User-Agent'] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 
